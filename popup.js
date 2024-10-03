@@ -11,7 +11,6 @@ document.addEventListener('DOMContentLoaded', () => {
     chrome.tabs.query({active: true, currentWindow: true}, (tabs) => {
       if (tabs[0].url.includes('youtube.com')) {
         chrome.tabs.sendMessage(tabs[0].id, {action: 'toggleSelectionMode', enable: true}, (response) => {
-          console.log(response.status);
           selectModeBtn.style.display = 'none';
           actionSection.style.display = 'block';
         });
