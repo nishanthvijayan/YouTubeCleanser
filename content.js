@@ -1,5 +1,8 @@
+// content.js
+
 let selectionMode = false;
 let selectedVideos = new Set();
+let markedVideos = new Set();
 
 // Function to toggle selection mode
 function toggleSelectionMode(enable) {
@@ -25,8 +28,9 @@ function toggleSelectionMode(enable) {
 function injectSelectionButtons() {
   const videoThumbnails = document.querySelectorAll('ytd-rich-item-renderer, ytd-video-renderer');
   videoThumbnails.forEach(thumbnail => {
-    // Avoid injecting multiple buttons
-    if (!thumbnail.querySelector('.selection-button')) {
+    const videoId = getVideoId(thumbnail);
+    // Avoid injecting buttons for already marked videos
+    if (!thumbnail.querySelector('.selection-button') && !markedVideos.has(videoId)) {
       const button = document.createElement('button');
       button.className = 'selection-button';
       button.title = 'Select this video for removal';
@@ -37,7 +41,7 @@ function injectSelectionButtons() {
       button.style.bottom = '10px';
       button.style.right = '10px';
       button.style.zIndex = '10';
-      button.style.background = 'rgba(255, 0, 0, 0.8)'; // Changed to red background
+      button.style.background = 'rgba(255, 0, 0, 0.8)'; // Red background
       button.style.color = 'white'; // White color for the cross
       button.style.border = 'none';
       button.style.borderRadius = '50%';
@@ -45,7 +49,7 @@ function injectSelectionButtons() {
       button.style.height = '32px';
       button.style.cursor = 'pointer';
       button.style.display = 'none'; // Hidden by default
-      button.style.fontSize = '24px'; // Slightly increased font size for better visibility
+      button.style.fontSize = '24px';
 
       // Show the button only in selection mode
       if (selectionMode) {
@@ -81,6 +85,51 @@ function toggleVideoSelection(thumbnail) {
   }
 }
 
+// Function to mark videos as "Not Recommended"
+async function markAsNotRecommended(videos) {
+  for (const videoId of videos) {
+    const videoThumbnail = findVideoThumbnailById(videoId);
+    if (videoThumbnail) {
+      // Simulate opening the options menu
+      await simulateClickEvent(videoThumbnail);
+      // Simulate clicking "Not interested"
+      await simulateClickNotInterested();
+      // Remove the selection button and add to markedVideos set
+      const button = videoThumbnail.querySelector('.selection-button');
+      if (button) button.remove();
+      markedVideos.add(videoId);
+      selectedVideos.delete(videoId);
+      videoThumbnail.classList.remove('selected');
+      // Optionally, wait a bit to avoid overwhelming the browser
+      await delay(500);
+    }
+  }
+  updateSelectionVisuals();
+}
+
+// Update visuals based on selection
+function updateSelectionVisuals() {
+  const videoThumbnails = document.querySelectorAll('ytd-rich-item-renderer, ytd-video-renderer');
+  videoThumbnails.forEach(thumbnail => {
+    const videoId = getVideoId(thumbnail);
+    if (videoId) {
+      if (markedVideos.has(videoId)) {
+        const button = thumbnail.querySelector('.selection-button');
+        if (button) button.remove();
+        thumbnail.classList.remove('selected');
+      } else if (selectedVideos.has(videoId)) {
+        thumbnail.classList.add('selected');
+        const button = thumbnail.querySelector('.selection-button');
+        if (button) button.style.background = 'rgba(0, 255, 0, 0.8)';
+      } else {
+        thumbnail.classList.remove('selected');
+        const button = thumbnail.querySelector('.selection-button');
+        if (button) button.style.background = 'rgba(255, 0, 0, 0.8)';
+      }
+    }
+  });
+}
+
 // Function to get video ID or unique identifier
 function getVideoId(thumbnail) {
   // Attempt to extract video ID from the thumbnail link
@@ -90,19 +139,6 @@ function getVideoId(thumbnail) {
     return url.searchParams.get('v') || link.href;
   }
   return null;
-}
-
-// Update visuals based on selection
-function updateSelectionVisuals() {
-  const videoThumbnails = document.querySelectorAll('ytd-rich-item-renderer, ytd-video-renderer');
-  videoThumbnails.forEach(thumbnail => {
-    const videoId = getVideoId(thumbnail);
-    if (videoId && selectedVideos.has(videoId)) {
-      thumbnail.classList.add('selected');
-    } else {
-      thumbnail.classList.remove('selected');
-    }
-  });
 }
 
 // Observe dynamically added videos
@@ -119,20 +155,7 @@ function observeNewVideos() {
   observer.observe(document.body, { childList: true, subtree: true });
 }
 
-// Function to mark videos as "Not Recommended"
-async function markAsNotRecommended(videos) {
-  for (const videoId of videos) {
-    const videoThumbnail = findVideoThumbnailById(videoId);
-    if (videoThumbnail) {
-      // Simulate opening the options menu
-      await simulateClickEvent(videoThumbnail);
-      // Simulate clicking "Not interested"
-      await simulateClickNotInterested();
-      // Optionally, wait a bit to avoid overwhelming the browser
-      await delay(500);
-    }
-  }
-}
+
 
 // Helper function to find video thumbnail by ID
 function findVideoThumbnailById(videoId) {

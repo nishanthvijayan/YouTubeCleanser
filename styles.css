@@ -3,7 +3,7 @@
 /* Highlight selected videos */
 .selection-mode ytd-rich-item-renderer.selected,
 .selection-mode ytd-video-renderer.selected {
-  outline: 3px solid #00ff00; /* Changed to green for selected state */
+  outline: 3px solid #00ff00; /* Green outline for selected state */
   position: relative;
 }
 
@@ -51,4 +51,10 @@
 /* Hover effect for selected video button */
 .selection-mode .selected .selection-button:hover {
   background: rgba(0, 255, 0, 1); /* Solid green on hover for selected state */
+}
+
+/* Hide selection button for marked videos */
+.selection-mode ytd-rich-item-renderer.marked .selection-button,
+.selection-mode ytd-video-renderer.marked .selection-button {
+  display: none;
 }
