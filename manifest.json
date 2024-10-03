@@ -1,0 +1,24 @@
+{
+    "manifest_version": 3,
+    "name": "YouTube Not Recommended Manager",
+    "version": "1.0",
+    "description": "Select multiple YouTube videos and mark them as Not Recommended.",
+    "permissions": [
+      "activeTab",
+      "scripting"
+    ],
+    "action": {
+      "default_popup": "popup.html"
+    },
+    "background": {
+      "service_worker": "background.js"
+    },
+    "content_scripts": [
+      {
+        "matches": ["*://*.youtube.com/*"],
+        "js": ["content.js"],
+        "css": ["styles.css"]
+      }
+    ]
+  }
+  

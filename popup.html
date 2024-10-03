@@ -1,0 +1,50 @@
+<!-- popup.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>YouTube Not Recommended</title>
+  <style>
+    body {
+      min-width: 300px;
+      min-height: 150px;
+      font-family: Arial, sans-serif;
+      padding: 10px;
+    }
+    #selectModeBtn {
+      padding: 10px 20px;
+      font-size: 14px;
+      cursor: pointer;
+    }
+    #actionSection {
+      margin-top: 20px;
+      display: none;
+    }
+    #markNotRecommendedBtn {
+      padding: 10px 20px;
+      font-size: 14px;
+      cursor: pointer;
+      background-color: #ff0000;
+      color: white;
+      border: none;
+      border-radius: 4px;
+    }
+    #status {
+      margin-top: 10px;
+      font-size: 12px;
+      color: green;
+    }
+  </style>
+</head>
+<body>
+  <h2>YouTube Manager</h2>
+  <button id="selectModeBtn">Enter Selection Mode</button>
+  
+  <div id="actionSection">
+    <button id="markNotRecommendedBtn">Mark Selected as Not Recommended</button>
+    <div id="status"></div>
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>

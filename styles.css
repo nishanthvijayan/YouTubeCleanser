@@ -1,0 +1,30 @@
+/* styles.css */
+
+/* Highlight selected videos */
+.selection-mode ytd-rich-item-renderer.selected,
+.selection-mode ytd-video-renderer.selected {
+  outline: 3px solid #ff0000;
+  position: relative;
+}
+
+/* Cursor style in selection mode */
+.selection-mode ytd-rich-item-renderer,
+.selection-mode ytd-video-renderer {
+  cursor: default; /* Remove pointer cursor since selection is via button */
+}
+
+/* Style for the selection button */
+.selection-button {
+  display: none; /* Hidden by default */
+  /* Additional inline styles are applied via content.js */
+}
+
+/* Show selection buttons only in selection mode */
+.selection-mode .selection-button {
+  display: block;
+}
+
+/* Optional: Add hover effect to the selection button */
+.selection-button:hover {
+  background: rgba(255, 255, 255, 1);
+}
