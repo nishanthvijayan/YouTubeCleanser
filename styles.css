@@ -3,7 +3,7 @@
 /* Highlight selected videos */
 .selection-mode ytd-rich-item-renderer.selected,
 .selection-mode ytd-video-renderer.selected {
-  outline: 3px solid #00ff00; /* Green outline for selected state */
+  outline: 1px solid rgba(255, 0, 0, 0.8); /* red outline for selected state */
   position: relative;
 }
 
@@ -20,17 +20,11 @@
   bottom: 10px;
   right: 10px;
   z-index: 10;
-  background: rgba(255, 0, 0, 0.8); /* Red background for delete icon */
-  color: white; /* White color for the cross */
-  border: none;
-  border-radius: 50%;
-  width: 32px;
-  height: 32px;
+  background: transparent; /* Transparent background */
+  border-radius: 10%;
+  width: 20px;
+  height: 20px;
   cursor: pointer;
-  font-size: 24px;
-  align-items: center;
-  justify-content: center;
-  transition: background-color 0.3s ease; /* Smooth transition for color change */
 }
 
 /* Show selection buttons only in selection mode */
@@ -40,17 +34,19 @@
 
 /* Hover effect for the selection button */
 .selection-button:hover {
-  background: rgba(255, 0, 0, 1); /* Solid red on hover */
+  border-color: #a0a0a0; /* Lighter grey on hover */
 }
 
 /* Style for selected video button */
 .selection-mode .selected .selection-button {
-  background: rgba(0, 255, 0, 0.8); /* Green background for selected state */
+  background: rgba(255, 0, 0, 0.8); /* red fill for selected state */
+  border-color: rgba(255, 0, 0, 0.8); /* red border for selected state */
 }
 
 /* Hover effect for selected video button */
 .selection-mode .selected .selection-button:hover {
-  background: rgba(0, 255, 0, 1); /* Solid green on hover for selected state */
+  background: rgba(255, 0, 0, 0.8); /* Slightly darker red on hover for selected state */
+  border-color: rgba(255, 0, 0, 0.8);
 }
 
 /* Hide selection button for marked videos */

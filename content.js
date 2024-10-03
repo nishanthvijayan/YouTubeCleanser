@@ -4,6 +4,10 @@ let selectionMode = false;
 let selectedVideos = new Set();
 let markedVideos = new Set();
 
+const red = 'rgba(255, 0, 0, 0.8)';
+const green = 'rgba(0, 255, 0, 0.8)';
+const grey = '#808080';
+
 // Function to toggle selection mode
 function toggleSelectionMode(enable) {
   selectionMode = enable;
@@ -16,13 +20,26 @@ function toggleSelectionMode(enable) {
   } else {
     document.body.classList.remove('selection-mode');
     // Remove selection buttons
-    removeSelectionButtons();
+    // removeSelectionButtons();
     // Disconnect the observer
     if (observer) observer.disconnect();
     selectedVideos.clear();
     updateSelectionVisuals();
   }
 }
+
+// function removeSelectionButtons() {
+//   const selectionButtons = document.querySelectorAll('.selection-button');
+//   selectionButtons.forEach(button => {
+//     button.remove();
+//   });
+
+//   // Remove 'selected' class from all video thumbnails
+//   const selectedVideos = document.querySelectorAll('.selected');
+//   selectedVideos.forEach(video => {
+//     video.classList.remove('selected');
+//   });
+// }
 
 // Function to inject selection buttons into video thumbnails
 function injectSelectionButtons() {
@@ -34,22 +51,22 @@ function injectSelectionButtons() {
       const button = document.createElement('button');
       button.className = 'selection-button';
       button.title = 'Select this video for removal';
-      button.innerHTML = '&times;'; // Cross symbol for delete icon
+      // button.innerHTML = '&times;'; // Cross symbol for delete icon
       // Style the button (additional styles are in styles.css)
       thumbnail.style.position = 'relative'; // Ensure positioning context
       button.style.position = 'absolute';
       button.style.bottom = '10px';
       button.style.right = '10px';
       button.style.zIndex = '10';
-      button.style.background = 'rgba(255, 0, 0, 0.8)'; // Red background
+      button.style.background = grey;
       button.style.color = 'white'; // White color for the cross
       button.style.border = 'none';
-      button.style.borderRadius = '50%';
-      button.style.width = '32px';
-      button.style.height = '32px';
+      button.style.borderRadius = '10%';
+      button.style.width = '20px';
+      button.style.height = '20px';
       button.style.cursor = 'pointer';
       button.style.display = 'none'; // Hidden by default
-      button.style.fontSize = '24px';
+      button.style.fontSize = '20px';
 
       // Show the button only in selection mode
       if (selectionMode) {
@@ -77,11 +94,11 @@ function toggleVideoSelection(thumbnail) {
   if (selectedVideos.has(videoId)) {
     selectedVideos.delete(videoId);
     thumbnail.classList.remove('selected');
-    thumbnail.querySelector('.selection-button').style.background = 'rgba(255, 0, 0, 0.8)';
+    thumbnail.querySelector('.selection-button').style.background = grey;
   } else {
     selectedVideos.add(videoId);
     thumbnail.classList.add('selected');
-    thumbnail.querySelector('.selection-button').style.background = 'rgba(0, 255, 0, 0.8)'; // Change to green when selected
+    thumbnail.querySelector('.selection-button').style.background = red; // Change to red when selected
   }
 }
 
@@ -120,11 +137,11 @@ function updateSelectionVisuals() {
       } else if (selectedVideos.has(videoId)) {
         thumbnail.classList.add('selected');
         const button = thumbnail.querySelector('.selection-button');
-        if (button) button.style.background = 'rgba(0, 255, 0, 0.8)';
+        if (button) button.style.background = red;
       } else {
         thumbnail.classList.remove('selected');
         const button = thumbnail.querySelector('.selection-button');
-        if (button) button.style.background = 'rgba(255, 0, 0, 0.8)';
+        if (button) button.style.background = grey;
       }
     }
   });
