@@ -1,5 +1,3 @@
-// content.js
-
 let selectionMode = false;
 let selectedVideos = new Set();
 
@@ -31,25 +29,29 @@ function injectSelectionButtons() {
     if (!thumbnail.querySelector('.selection-button')) {
       const button = document.createElement('button');
       button.className = 'selection-button';
-      button.title = 'Select this video';
-      button.innerHTML = '&#10004;'; // Checkmark symbol
+      button.title = 'Select this video for removal';
+      button.innerHTML = '&times;'; // Cross symbol for delete icon
       // Style the button (additional styles are in styles.css)
       thumbnail.style.position = 'relative'; // Ensure positioning context
       button.style.position = 'absolute';
-      button.style.top = '10px';
+      button.style.bottom = '10px';
       button.style.right = '10px';
       button.style.zIndex = '10';
-      button.style.background = 'rgba(255, 255, 255, 0.8)';
+      button.style.background = 'rgba(255, 0, 0, 0.8)'; // Changed to red background
+      button.style.color = 'white'; // White color for the cross
       button.style.border = 'none';
       button.style.borderRadius = '50%';
-      button.style.width = '24px';
-      button.style.height = '24px';
+      button.style.width = '32px';
+      button.style.height = '32px';
       button.style.cursor = 'pointer';
       button.style.display = 'none'; // Hidden by default
+      button.style.fontSize = '24px'; // Slightly increased font size for better visibility
 
       // Show the button only in selection mode
       if (selectionMode) {
-        button.style.display = 'block';
+        button.style.display = 'flex';
+        button.style.alignItems = 'center';
+        button.style.justifyContent = 'center';
       }
 
       // Attach click event listener
@@ -63,12 +65,6 @@ function injectSelectionButtons() {
   });
 }
 
-// Function to remove all selection buttons
-function removeSelectionButtons() {
-  const buttons = document.querySelectorAll('.selection-button');
-  buttons.forEach(button => button.remove());
-}
-
 // Function to toggle video selection
 function toggleVideoSelection(thumbnail) {
   const videoId = getVideoId(thumbnail);
@@ -77,9 +73,11 @@ function toggleVideoSelection(thumbnail) {
   if (selectedVideos.has(videoId)) {
     selectedVideos.delete(videoId);
     thumbnail.classList.remove('selected');
+    thumbnail.querySelector('.selection-button').style.background = 'rgba(255, 0, 0, 0.8)';
   } else {
     selectedVideos.add(videoId);
     thumbnail.classList.add('selected');
+    thumbnail.querySelector('.selection-button').style.background = 'rgba(0, 255, 0, 0.8)'; // Change to green when selected
   }
 }
 
