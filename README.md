@@ -1,6 +1,6 @@
 # YouTube Cleanser ✨
 
-Ever watched a clip from "The Office" and suddenly your entire YouTube feed is nothing but Michale Scott? Or maybe you clicked on one conspiracy theory video out of curiosity, and now YouTube thinks you're ready to believe that Birds Are Not Real but a CIA surveillance mechanism? We've all been there, and it's annoying as hell.
+Ever watched a clip from "The Office" and suddenly your entire YouTube feed is nothing but Michael Scott? Or maybe you clicked on one conspiracy theory video out of curiosity, and now YouTube thinks you're ready to believe that Birds Are Not Real but a CIA surveillance mechanism? We've all been there, and it's annoying as hell.
 
 Introducing YouTube Cleanser. It's a browser extension that helps you clean up your YouTube recommendations by easily marking multiple videos as "Not Interested". Think of it as spring cleaning for your YouTube feed, but you can do it anytime you want.
 
