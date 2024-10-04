@@ -9,6 +9,9 @@ const red = 'rgba(255, 0, 0, 0.8)';
 const green = 'rgba(0, 255, 0, 0.8)';
 const grey = '#808080';
 
+const CLEANSE_BUTTON_TEXT_PRE = "Cleanse ✨"
+const CLEANSE_BUTTON_TEXT_POST = "Remove 🗑️"
+
 // Function to toggle selection mode
 function toggleSelectionMode(enable) {
   selectionMode = enable;
@@ -252,15 +255,15 @@ function delay(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));
 }
 
-// Function to create the "Cleanse ✨" button
+
 function createCleanseButton() {
   console.log("Create cleanse");
   const navBar = document.querySelector('div#buttons');
   console.log(navBar);
   if (!navBar) return;
 
-  cleanseButton = document.createElement('button');
-  cleanseButton.textContent = 'Cleanse ✨';
+  cleanseButton = document.createElement('a');
+  cleanseButton.textContent = CLEANSE_BUTTON_TEXT_PRE;
   cleanseButton.id = 'cleanseButton';
   cleanseButton.style.marginLeft = '10px';
   cleanseButton.addEventListener('click', handleCleanseButtonClick);
@@ -268,11 +271,11 @@ function createCleanseButton() {
   navBar.appendChild(cleanseButton);
 }
 
-// Function to handle the "Cleanse ✨" button click
+
 function handleCleanseButtonClick() {
   if (!selectionMode) {
     toggleSelectionMode(true);
-    cleanseButton.textContent = 'Remove Selected ✅';
+    cleanseButton.textContent = CLEANSE_BUTTON_TEXT_POST;
   } else {
     const selectedVideoIds = Array.from(selectedVideos);
     if (selectedVideoIds.length === 0) {
@@ -281,7 +284,7 @@ function handleCleanseButtonClick() {
     }
     markAsNotRecommended(selectedVideoIds).then(() => {
       toggleSelectionMode(false);
-      cleanseButton.textContent = 'Cleanse ✨';
+      cleanseButton.textContent = CLEANSE_BUTTON_TEXT_PRE;
     });
   }
 }
