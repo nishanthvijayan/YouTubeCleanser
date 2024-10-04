@@ -1,18 +1,12 @@
 {
     "manifest_version": 3,
-    "name": "YouTube Not Recommended Manager",
+    "name": "YouTube Cleanser",
     "version": "1.0",
-    "description": "Select multiple YouTube videos and mark them as Not Recommended.",
+    "description": "Select and remove unwanted YouTube videos.",
     "permissions": [
       "activeTab",
       "scripting"
     ],
-    "action": {
-      "default_popup": "popup.html"
-    },
-    "background": {
-      "service_worker": "background.js"
-    },
     "content_scripts": [
       {
         "matches": ["*://*.youtube.com/*"],
@@ -21,4 +15,3 @@
       }
     ]
   }
-  

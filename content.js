@@ -3,6 +3,7 @@
 let selectionMode = false;
 let selectedVideos = new Set();
 let markedVideos = new Set();
+let cleanseButton;
 
 const red = 'rgba(255, 0, 0, 0.8)';
 const green = 'rgba(0, 255, 0, 0.8)';
@@ -172,8 +173,6 @@ function observeNewVideos() {
   observer.observe(document.body, { childList: true, subtree: true });
 }
 
-
-
 // Helper function to find video thumbnail by ID
 function findVideoThumbnailById(videoId) {
   const videoThumbnails = document.querySelectorAll('ytd-rich-item-renderer, ytd-video-renderer');
@@ -253,17 +252,42 @@ function delay(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));
 }
 
-// Listen for messages from popup or background
-chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
-  if (request.action === 'toggleSelectionMode') {
-    toggleSelectionMode(request.enable);
-    sendResponse({status: 'Selection mode ' + (request.enable ? 'enabled' : 'disabled')});
-  } else if (request.action === 'getSelectedVideos') {
-    sendResponse({selectedVideos: Array.from(selectedVideos)});
-  } else if (request.action === 'markAsNotRecommended') {
-    markAsNotRecommended(request.videos).then(() => {
-      sendResponse({status: 'Marked as Not Recommended'});
+// Function to create the "Cleanse ✨" button
+function createCleanseButton() {
+  console.log("Create cleanse");
+  const navBar = document.querySelector('div#buttons');
+  console.log(navBar);
+  if (!navBar) return;
+
+  cleanseButton = document.createElement('button');
+  cleanseButton.textContent = 'Cleanse ✨';
+  cleanseButton.id = 'cleanseButton';
+  cleanseButton.style.marginLeft = '10px';
+  cleanseButton.addEventListener('click', handleCleanseButtonClick);
+
+  navBar.appendChild(cleanseButton);
+}
+
+// Function to handle the "Cleanse ✨" button click
+function handleCleanseButtonClick() {
+  if (!selectionMode) {
+    toggleSelectionMode(true);
+    cleanseButton.textContent = 'Remove Selected ✅';
+  } else {
+    const selectedVideoIds = Array.from(selectedVideos);
+    if (selectedVideoIds.length === 0) {
+      alert('No videos selected.');
+      return;
+    }
+    markAsNotRecommended(selectedVideoIds).then(() => {
+      toggleSelectionMode(false);
+      cleanseButton.textContent = 'Cleanse ✨';
     });
-    return true; // Indicates that the response is asynchronous
   }
-});
+}
+
+// Call createCleanseButton when the page loads
+window.addEventListener('load', createCleanseButton);
+
+// Remove message listener as it's no longer needed
+// chrome.runtime.onMessage.removeListener(...);
