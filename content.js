@@ -21,10 +21,12 @@ function toggleSelectionMode(enable) {
     injectSelectionButtons();
     // Observe for new videos added to the DOM
     observeNewVideos();
+    cleanseButton.textContent = CLEANSE_BUTTON_TEXT_POST;
   } else {
     document.body.classList.remove('selection-mode');
     // Remove selection buttons
     // removeSelectionButtons();
+    cleanseButton.textContent = CLEANSE_BUTTON_TEXT_PRE;
     // Disconnect the observer
     if (observer) observer.disconnect();
     selectedVideos.clear();
@@ -275,16 +277,15 @@ function createCleanseButton() {
 function handleCleanseButtonClick() {
   if (!selectionMode) {
     toggleSelectionMode(true);
-    cleanseButton.textContent = CLEANSE_BUTTON_TEXT_POST;
   } else {
     const selectedVideoIds = Array.from(selectedVideos);
     if (selectedVideoIds.length === 0) {
-      alert('No videos selected.');
+      toggleSelectionMode(false);
       return;
     }
+
     markAsNotRecommended(selectedVideoIds).then(() => {
       toggleSelectionMode(false);
-      cleanseButton.textContent = CLEANSE_BUTTON_TEXT_PRE;
     });
   }
 }
