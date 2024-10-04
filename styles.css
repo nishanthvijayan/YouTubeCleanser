@@ -1,9 +1,20 @@
 /* styles.css */
+:root {
+  --text-color: black;
+  --hover-color: #e5e5e5;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --text-color: white;
+    --hover-color: #272727;
+  }
+}
 
 /* Highlight selected videos */
 .selection-mode ytd-rich-item-renderer.selected,
 .selection-mode ytd-video-renderer.selected {
-  outline: 1px solid rgba(255, 0, 0, 0.8); /* red outline for selected state */
+  outline: 1px solid #ff0008; /* red outline for selected state */
   position: relative;
 }
 
@@ -39,14 +50,14 @@
 
 /* Style for selected video button */
 .selection-mode .selected .selection-button {
-  background: rgba(255, 0, 0, 0.8); /* red fill for selected state */
-  border-color: rgba(255, 0, 0, 0.8); /* red border for selected state */
+  background: #ff0008; /* red fill for selected state */
+  border-color: #ff0008; /* red border for selected state */
 }
 
 /* Hover effect for selected video button */
 .selection-mode .selected .selection-button:hover {
-  background: rgba(255, 0, 0, 0.8); /* Slightly darker red on hover for selected state */
-  border-color: rgba(255, 0, 0, 0.8);
+  background: #ff0008; /* Slightly darker red on hover for selected state */
+  border-color: #ff0008;
 }
 
 /* Hide selection button for marked videos */
@@ -56,16 +67,15 @@
 }
 
 #cleanseButton {
-  background-color: #065fd4;
-  color: white;
-  border: none;
-  padding: 8px 16px;
-  border-radius: 2px;
+  color: var(--text-color);
+  /* border: 0.2px solid var(--text-color); */
+  padding: 8px 12px;
+  border-radius: 8px;
   font-size: 14px;
   cursor: pointer;
   transition: background-color 0.3s;
 }
 
 #cleanseButton:hover {
-  background-color: #0056b3;
+  background-color: var(--hover-color);
 }
