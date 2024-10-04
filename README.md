@@ -4,7 +4,9 @@ Ever watched a clip from "The Office" and suddenly your entire YouTube feed is n
 
 Introducing YouTube Cleanser. It's a browser extension that helps you clean up your YouTube recommendations by easily marking multiple videos as "Not Interested". Think of it as spring cleaning for your YouTube feed, but you can do it anytime you want.
 
-99% of the code for this extension was written using Cursor, an AI-powered code editor. So if you plan on going through the code to understand or modify it manually, may God be with you.
+![CleanShot 2024-10-05 at 01 22 40@2x](https://github.com/user-attachments/assets/7372b9c8-2659-4335-a017-86c769d16453)
+
+Warning: 99% of the code for this extension was written using Cursor, an AI-powered code editor. So if you plan on going through the code to understand or modify it manually, may God be with you.
 
 ## Features
 
