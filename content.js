@@ -34,19 +34,6 @@ function toggleSelectionMode(enable) {
   }
 }
 
-// function removeSelectionButtons() {
-//   const selectionButtons = document.querySelectorAll('.selection-button');
-//   selectionButtons.forEach(button => {
-//     button.remove();
-//   });
-
-//   // Remove 'selected' class from all video thumbnails
-//   const selectedVideos = document.querySelectorAll('.selected');
-//   selectedVideos.forEach(video => {
-//     video.classList.remove('selected');
-//   });
-// }
-
 // Function to inject selection buttons into video thumbnails
 function injectSelectionButtons() {
   const videoThumbnails = document.querySelectorAll('ytd-rich-item-renderer, ytd-video-renderer');
@@ -136,7 +123,7 @@ function updateSelectionVisuals() {
   videoThumbnails.forEach(thumbnail => {
     const videoId = getVideoId(thumbnail);
     if (videoId) {
-      if (markedVideos.has(videoId)) {
+      if (markedVideos.has(videoId) || !selectionMode) {
         const button = thumbnail.querySelector('.selection-button');
         if (button) button.remove();
         thumbnail.classList.remove('selected');
